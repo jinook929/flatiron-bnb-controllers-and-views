@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>
+  <strong>Name:</strong>
+  <%= @city.name %>
+</h1>
+
+<h2>Listings</h2>
+
+<ul>
+  <% @listings.each do |listing| %>
+    <h3><%= link_to listing.title, listing_path(listing) %></h3>
+    <li><%= listing.address %></li>
+    <li><%= link_to listing.neighborhood.name, neighborhood_path(listing.neighborhood) %></li>
+    <li><%= listing.description %></li>
+    <li>Average Rating : <%= listing.average_review_rating %></li>
+    <li>$<%= listing.price %>/day</li>
+  <% end %>
+</ul>
+
+<h3>Openings Check for <%= @city.name %></h3>
+<%= form_tag "#{@city.id}/openings", method: :get do %>
+  <%= label_tag "Check-In Date" %><br>
+  <%= text_field_tag :checkin, "", placeholder: "e.g. 2014-05-01" %><br>
+  <%= label_tag "Check-Out Date" %><br>
+  <%= text_field_tag :checkout, "", placeholder: "e.g. 2014-05-05" %><br>
+  <%= submit_tag "Check Openings" %><br>
+<% end %>
+
+<%= link_to 'Edit', edit_city_path(@city) %> |
+<%= link_to 'Back', cities_path %>

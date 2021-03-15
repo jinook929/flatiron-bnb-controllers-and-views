@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @neighborhood.name %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= link_to @neighborhood.city.name, @neighborhood.city %>
+</p>
+
+
+<h2>Listings</h2>
+
+<% @listings.each do |listing| %>
+  <h3><%= link_to listing.title, listing %></h3>
+  <li><%= listing.listing_type %></li>
+  <li><%= listing.address %></li>
+  <li><%= listing.description %></li>
+  <li>Average Rating : <% if listing.average_review_rating != 0 %><%= listing.average_review_rating %><% else %>no ratings yet<% end %></li>
+  <li>$<%= listing.price %>/day</li>
+<% end %>
+
+<%= link_to 'Edit', edit_neighborhood_path(@neighborhood) %> |
+<%= link_to 'Back', neighborhoods_path %>

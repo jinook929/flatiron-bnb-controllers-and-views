@@ -23,10 +23,13 @@ class Listing < ActiveRecord::Base
 
   def self.available(start_date, end_date)
     if start_date && end_date
+      # binding.pry
       joins(:reservations).
         where.not(reservations: {check_in: start_date..end_date}) &
       joins(:reservations).
-        where.not(reservations: {check_out: start_date..end_date})
+        where.not(reservations: {check_out: start_date..end_date}) &
+      joins(:reservations).
+        where.not('reservations.check_in < ? AND reservations.check_out > ?', start_date, end_date)
     else
       []
     end

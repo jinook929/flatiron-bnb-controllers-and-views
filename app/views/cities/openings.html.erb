@@ -1,0 +1,22 @@
+<h1>Current Openings in <%= @city.name %></h1>
+
+<h2>Requested Dates</h2>
+<p><strong><em><%= @requested_period %></em></strong></p>
+<h3><%= "Sorry, No Openings on Your Request Dates..." if @openings.empty?%></h3>
+<hr>
+
+<% @openings.each do |opening| %>
+  <h3><%= link_to opening.title, listing_path(opening) %></h3>
+  <p><%= opening.listing_type %></p>
+  <P><%= link_to opening.neighborhood.name, neighborhood_path(opening.neighborhood) %></p>
+  <p>$<%= opening.price %>/day</p>
+  <p>Booked on : 
+  <ul>
+    <% opening.reservations.each do |reservation| %>
+      <li><%= reservation.check_in %> ~ <%= reservation.check_out %></li>
+    <% end %>
+  </ul>
+  <hr>
+<% end %>
+
+<%= link_to "Back to City", @city %>
